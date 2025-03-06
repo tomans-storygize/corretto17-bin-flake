@@ -15,10 +15,11 @@ in stdenv.mkDerivation {
 
   postUnpack = ''
     # ls
-    # mv pulumi-* pulumi
   '';
 
   srcs = map fetchurl data.correttoPkgs.${stdenv.hostPlatform.system};
+
+  home = "$out";
 
   installPhase = ''
     mkdir -p $out;
@@ -27,16 +28,17 @@ in stdenv.mkDerivation {
   '' + lib.optionalString stdenv.hostPlatform.isDarwin ''
     cp -R ./Contents/Home/* $out/
   '' + ''
-    # installShellCompletion --cmd pulumi \
-    #   --bash <($out/bin/pulumi completion bash) \
-    #   --fish <($out/bin/pulumi completion fish) \
-    #   --zsh  <($out/bin/pulumi completion zsh)
+    # any unconditional steps here
+    mkdir -p $out/nix-support
+    cat <<EOF > $out/nix-support/setup-hook
+    if [ -z "\''${JAVA_HOME-}" ]; then export JAVA_HOME=$out; fi
+    EOF
   '';
 
-  env = {
-    JAVA_HOME = "$out";
-    PATH = "$JAVA_HOME/bin:$PATH";
-  };
+  # env = {
+  #   JAVA_HOME = "$out";
+  #   PATH = "$JAVA_HOME/bin:$PATH";
+  # };
 
   nativeBuildInputs = [ installShellFiles ] ++ lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook makeWrapper ];
   buildInputs = [ pkgs.jdk21 stdenv.cc.cc.libgcc or null ];

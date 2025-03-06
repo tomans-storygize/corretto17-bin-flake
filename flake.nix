@@ -17,8 +17,14 @@
           default = derivation;
         }
       );
+      allSystemHomes=  nixpkgs.lib.genAttrs supportedSystems (system:
+        let
+          derivation = (allSystemDerivations system);
+        in derivation
+      );
     in {
       packages = allSystemDerivations;
+      home = allSystemHomes;
     };
   
 }

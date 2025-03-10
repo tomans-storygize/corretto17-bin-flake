@@ -19,7 +19,7 @@ in stdenv.mkDerivation {
 
   srcs = map fetchurl data.correttoPkgs.${stdenv.hostPlatform.system};
 
-  home = "$out";
+  home = ''${placeholder "out"}'';
 
   installPhase = ''
     mkdir -p $out;

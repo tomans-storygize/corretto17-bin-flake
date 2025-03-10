@@ -13,8 +13,11 @@
         let
           pkgs = import nixpkgs { inherit system; };
           derivation = import ./default.nix { inherit pkgs; };
+          derivationWithHome = derivation.overrideAttrs(oldAttrs: {
+            home = "${derivation}";
+          });
         in {
-          default = derivation;
+          default = derivationWithHome;
         }
       );
       allSystemHomes=  nixpkgs.lib.genAttrs supportedSystems (system:

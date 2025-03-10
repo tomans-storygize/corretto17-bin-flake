@@ -20,6 +20,7 @@ in stdenv.mkDerivation {
   srcs = map fetchurl data.correttoPkgs.${stdenv.hostPlatform.system};
 
   home = ''${placeholder "out"}'';
+  # home = "${pkgs.corretto21-bin}";
 
   installPhase = ''
     mkdir -p $out;

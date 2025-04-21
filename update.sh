@@ -5,7 +5,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Version of corretto from
-# https://github.com/corretto/corretto-21/releases/
+# https://github.com/corretto/corretto-17/releases/
 VERSION=$1
 
 if [ -z "${VERSION}" ] || [ $# -ne 1 ]; then
@@ -18,7 +18,7 @@ fi
 
 declare -a corretto_repos
 corretto_repos=(
-  "corretto-21"
+  "corretto-17"
 )
 
 # Contains latest release ${VERSION} from

@@ -10,7 +10,7 @@ let
   makeWrapper = pkgs.makeWrapper;
 
 in stdenv.mkDerivation {
-  pname = "corretto21-bin";
+  pname = "corretto17-bin";
   inherit (data) version;
 
   postUnpack = ''
@@ -42,7 +42,7 @@ in stdenv.mkDerivation {
   # };
 
   nativeBuildInputs = [ installShellFiles ] ++ lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook makeWrapper ];
-  buildInputs = [ pkgs.jdk21 stdenv.cc.cc.libgcc or null ];
+  buildInputs = [ pkgs.jdk21 pkgs.zlib stdenv.cc.cc.libgcc or null ];
 
   meta = with lib; {
     homepage = "https://docs.aws.amazon.com/corretto/latest";

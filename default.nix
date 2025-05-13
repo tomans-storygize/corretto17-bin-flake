@@ -41,8 +41,21 @@ in stdenv.mkDerivation {
   #   PATH = "$JAVA_HOME/bin:$PATH";
   # };
 
-  nativeBuildInputs = [ installShellFiles ] ++ lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook makeWrapper ];
-  buildInputs = [ pkgs.jdk21 pkgs.zlib stdenv.cc.cc.libgcc or null ];
+  nativeBuildInputs = [ installShellFiles ] ++ lib.optionals stdenv.hostPlatform.isLinux [
+    autoPatchelfHook
+    makeWrapper
+    pkgs.zlib
+    pkgs.freetype
+    pkgs.fontconfig
+    pkgs.alsa-lib
+    pkgs.xorg.libXtst
+    pkgs.xorg.libXrender
+    pkgs.xorg.libXi
+    pkgs.xorg.libX11
+    pkgs.xorg.libXext
+    pkgs.xorg.libX11.dev
+  ];
+  buildInputs = [ pkgs.jdk17 stdenv.cc.cc.libgcc or null ];
 
   meta = with lib; {
     homepage = "https://docs.aws.amazon.com/corretto/latest";
